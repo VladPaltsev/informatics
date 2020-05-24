@@ -1,0 +1,104 @@
+program project_spiral;
+
+var arr: array of array of integer;
+var num: array of integer;
+var m, n, i, j, a: integer;
+
+
+procedure Numbers;
+Begin
+  while i<(m*n) do
+  Begin
+    while (a<9)do
+    begin
+      a := a + 1;
+      num[i] := a;
+      i := i + 1;
+    end;
+    while (a>1)do
+    begin
+      a := a - 1;
+      num[i] := a;
+      i := i + 1;
+    end;
+  End;
+  a := 0;
+  i := 0;
+  j := 0;
+End;
+
+procedure dir_right;
+Begin
+  while (j<n-1) and (arr[i][j+1]=0) do
+  begin
+    arr[i][j+1] := num[a];
+    a := a + 1;
+    j := j + 1;
+  end;
+End;
+
+procedure dir_down;
+Begin
+  while (i<m-1) and (arr[i+1][j]=0) do
+  begin
+    arr[i+1][j] := num[a];
+    a := a + 1;
+    i := i + 1;
+  end;
+End;
+
+procedure dir_left;
+Begin
+  while (j>0) and (arr[i][j-1]=0) do
+  begin
+    arr[i][j-1] := num[a];
+    a := a + 1;
+    j := j - 1;
+  end;
+End;
+
+procedure dir_up;
+Begin
+  while (i>0) and (arr[i-1][j]=0) do
+  begin
+    arr[i-1][j] := num[a];
+    a := a + 1;
+    i := i - 1;
+  end;
+End;
+
+BEGIN
+
+  write('Enter width: ');
+  readln(n);
+  write('Enter height: ');
+  readln(m);
+  SetLength(num,m*n);
+  SetLength(arr,m,n);
+  i := 0;
+  j := 0;
+  a := 1;
+  Numbers;
+
+
+  while (a < m*n-1) do
+  begin
+    arr[0][0] := 1;
+    dir_right;
+    dir_down;
+    dir_left;
+    dir_up;
+  end;
+
+
+  for i:=0 to m-1 do
+  begin
+    for j:=0 to n-1 do
+    begin
+      write(arr[i][j]);
+    end;
+    writeln();
+  end;
+
+  readln();
+END.
