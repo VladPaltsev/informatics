@@ -1,0 +1,51 @@
+program project20_02_20;
+
+uses
+  Unit1;
+
+var P: array[1..20] of Point;
+var R: Rectangle;
+var A, B, C, D: Point;
+var i, n, res: integer;
+
+BEGIN
+
+  writeln('Введите координаты левой верхней точки');
+  write('A.x = ');
+  readln(A.x);
+  write('A.y = ');
+  readln(A.y);
+
+  writeln('Введите координаты правой нижней точки');
+  write('C.x = ');
+  readln(C.x);
+  write('C.y = ');
+  readln(C.y);
+
+  write('n = ');
+  readln(n);
+
+  B.x := C.x;
+  B.y := A.y;
+  D.x := A.x;
+  D.y := C.y;
+
+  R.P1 := A;
+  R.P2 := B;
+  R.P3 := C;
+  R.P4 := D;
+
+  for i:=1 to n do
+  Begin
+   write('P[', i, '].x = ');
+   readln(P[i].x);
+   write('P[', i, '].y = ');
+   readln(P[i].y);
+  End;
+
+  res := 0;
+  res := RectN(P, R, n);
+  writeln('result = ', res);
+
+  readln();
+END.
