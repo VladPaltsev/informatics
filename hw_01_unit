@@ -1,0 +1,76 @@
+unit Unit1;
+
+interface
+
+  type Point = record
+    x, y: integer;
+  end;
+
+  type Line = record
+    V1, V2: Point;
+    Dist: Real
+  end;
+
+  type Triangle = record
+    P1, P2, P3: Point;
+  end;
+
+  type Rectangle = record
+    P1, P2, P3, P4: Point;
+  end;
+
+  Function GetTrSq(T: Triangle): Real;
+  Function Check(Q, W, E, R : Point): Real;
+  Function GetPer(T1: Triangle): Real;
+  Function GetDist(P1, P2: Point): Real;
+  Function RectN(P: array of Point; R: Rectangle; n: integer): integer;
+
+implementation
+
+Function RectN(P: array of Point; R: Rectangle; n: integer): integer;
+var i: integer;
+Begin
+  result := 0;
+  for i:=1 to n do
+  Begin
+    if ( ((P[i].x >= R.P1.x) and (P[i].y <= R.P1.y)) and ((P[i].x <= R.P3.x) and (P[i].y >= R.P3.y)) ) then result := result + 1;
+  End;
+End;
+
+///////////////////////////код ниже не используется///////////////////////
+Function GetTrSq(T: Triangle): Real;
+Begin
+  result := 0.5 * ((T.P2.x - T.P1.x) * (T.P3.y - T.P1.y) - (T.P3.x - T.P1.x) * (T.P2.y - T.P1.y));
+End;
+
+Function Check(Q, W, E, R : Point): Real;
+var T1, T2: Triangle;
+Begin
+  T1.P1 := Q;
+  T1.P2 := W;
+  T1.P3 := E;
+
+  T2.P1 := Q;
+  T2.P2 := W;
+  T2.P3 := R;
+
+  //result := 1;
+  if (( GetTrSq(T1)>0 ) and ( GetTrSq(T2)>0 )) or (( GetTrSq(T1)<0 ) and ( GetTrSq(T2)<0 )) then
+  Begin
+    result := 0;
+  end;
+  //writeln();
+  //writeln(result);
+end;
+
+Function GetDist(P1, P2: Point): Real;
+Begin
+  result := sqrt(sqr(P2.x - P1.x) + sqr(P2.y - P1.y));
+end;
+
+Function GetPer(T1: Triangle): Real;
+Begin
+  result := GetDist(T1.P1, T1.P2) + GetDist(T1.P2, T1.P3) + GetDist(T1.P3, T1.P1);
+end;
+
+end.
