@@ -1,0 +1,53 @@
+program project_spiral_verification;
+
+var arr: array of integer;
+var i, j, a, N: integer;
+
+
+procedure Numbers;
+Begin
+  while i<(N) do
+  Begin
+    arr[i] := i;
+    write('arr[', i, '] := ');
+    readln(arr[i]);
+    i := i + 1;
+  end;
+  i := 0;
+End;
+
+procedure Move;
+Begin
+  while (arr[i] mod 2 = 1) do
+  begin
+    for j:=i to N+1 do
+    Begin
+      arr[j] := arr[j+1];
+    end;
+    N := N - 1;;
+    SetLength(arr,N);
+  end;
+End;
+
+BEGIN
+
+  write('Enter N: ');
+  readln(N);
+  SetLength(arr,N);
+  i := 0;
+  j := 0;
+  a := 0;
+  Numbers;
+
+
+  while (i < N+1) do
+  begin
+    Move;
+    i := i + 1;
+  end;
+
+  write('result: ');
+  for i:=0 to N-1 do write(arr[i], ' ');
+
+  readln();
+END.   
