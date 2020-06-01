@@ -17,23 +17,23 @@ var person: Tstudent;
 procedure read_name;
 Begin
   person.Name := st[i];
-  writeln(Res, 'Name: ', st[i]);
+  //writeln(Res, 'Name: ', st[i]);
 End;
 
 procedure read_date;
 Begin
   person.Date := st[i];
-  writeln(Res, 'Date of birth: ', st[i]);
+  //writeln(Res, 'Date of birth: ', st[i]);
 End;
 
 procedure read_group;
 Begin
   person.Group := st[i];
-  writeln(Res, 'Group: ', st[i]);
+  //writeln(Res, 'Group: ', st[i]);
 End;
 
 BEGIN
-  AssignFile(F, 'D:\Lazarus\My_Files\Data.txt');
+  AssignFile(F, 'D:\Lazarus\My_Files\Data2.txt');
   AssignFile(Res, 'D:\Lazarus\My_Files\Result.txt');
   rewrite(Res);
   reset(F);
@@ -61,4 +61,14 @@ BEGIN
       if (s[i] = 'date') then read_date;
       if (s[i] = 'group') then read_group;
     end;
-  end; 
+
+    writeln(Res, 'Name: ', person.Name);
+    writeln(Res, 'Date of birth: ', person.date);
+    writeln(Res, 'Group: ', person.group);
+    writeln(Res);
+  end;
+
+  CloseFile(F);
+  CloseFile(Res);
+  readln();
+END.
