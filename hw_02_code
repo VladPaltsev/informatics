@@ -1,0 +1,85 @@
+program files_sort;
+
+var p, x, i, k, n, num, Xmax, imax: integer;
+var s, Sbuf, Smax: string;
+var Fa: TextFile;
+var j: array[1..10] of integer;
+var f: array[1..10] of textfile;
+
+procedure count;
+Begin
+ for i:=1 to n do
+ begin
+   while not eof(f[i]) do
+   begin
+     readln(f[i]);
+     num := num+1;
+     write(num, ' ');
+   end;
+ end;
+End;
+
+procedure Scan;
+Begin
+  for k:=0 to j[i] do
+  begin
+    readln(f[i], s);
+    Sbuf := copy(s, 9, 2);
+    val(Sbuf, x);
+  end;
+End;
+
+BEGIN
+  num := 1;
+  Xmax := 0;
+  p := 1;
+  x := 1;
+  AssignFile(f[1], 'D:\Lazarus\My_Files\text 1.txt');
+  AssignFile(f[2], 'D:\Lazarus\My_Files\text 2.txt');
+  AssignFile(f[3], 'D:\Lazarus\My_Files\text 3.txt');
+  AssignFile(f[4], 'D:\Lazarus\My_Files\text 4.txt');
+  AssignFile(f[5], 'D:\Lazarus\My_Files\text 5.txt');
+  AssignFile(f[6], 'D:\Lazarus\My_Files\text 6.txt');
+  AssignFile(f[7], 'D:\Lazarus\My_Files\text 7.txt');
+  AssignFile(f[8], 'D:\Lazarus\My_Files\text 8.txt');
+  AssignFile(f[9], 'D:\Lazarus\My_Files\text 9.txt');
+  AssignFile(f[10], 'D:\Lazarus\My_Files\text 10.txt');
+  AssignFile(Fa, 'D:\Lazarus\My_Files\Answer.txt');
+  rewrite(Fa);
+
+  write('Enter n: ');
+  readln(n);
+
+  for i := 1 to n do
+  begin
+    reset(f[i]);
+    j[i] := 0;
+  end;
+ count;
+
+  for p:=1 to num do
+  begin
+
+    for i:=1 to n do
+    begin
+      Scan;
+
+      if (x > Xmax) then
+      begin
+        Xmax := x;
+        Smax := s;
+        imax := i;
+      end;
+    end;
+
+    j[imax] := j[imax] + 1;
+    writeln(Fa, Smax);
+    writeln();
+    Xmax := 0;
+    for k:=1 to n do reset(f[k]);
+  end;
+
+  for k:=1 to n do CloeFile(f[k]);
+  CloseFile(Fa);
+  readln();
+END. 
