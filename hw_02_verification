@@ -1,0 +1,69 @@
+program data_file;
+
+type Tstudent = record
+  Name :string;
+  Date :string;
+  Group :string;
+end;
+
+var p, x, i, k, n, num, Xmax, imax: integer;
+var head, str, sbuf: string;
+var s: array[1..3] of string;
+  var st: array[1..3] of string;
+var Fa: TextFile;
+var F, Res: textfile;
+var person: Tstudent;
+
+procedure read_name;
+Begin
+  person.Name := st[i];
+  writeln(Res, 'Name: ', st[i]);
+End;
+
+procedure read_date;
+Begin
+  person.Date := st[i];
+  writeln(Res, 'Date of birth: ', st[i]);
+End;
+
+procedure read_group;
+Begin
+  person.Group := st[i];
+  writeln(Res, 'Group: ', st[i]);
+End;
+
+BEGIN
+  AssignFile(F, 'D:\Lazarus\My_Files\Data.txt');
+  AssignFile(Res, 'D:\Lazarus\My_Files\Result.txt');
+  rewrite(Res);
+  reset(F);
+
+
+  readln(F, head);
+
+  s[1] := copy(head, 2, pos(';', head)-2);
+  s[2] := copy(head, pos(';', head)+1, pos(';', head)-2);
+  s[3] := copy(head, (length(s[2]) + length(s[2]) + 4), length(head));
+
+  while not eof(F) do
+  begin;
+    readln(F, str);
+    st[1] := copy(str, 2, pos(';', str)-2);
+    sbuf := copy(str, pos(';', str)+1, length(str)-1);
+    st[2] := copy(sbuf, 1, pos(';', sbuf)-1);
+    st[3] := copy(sbuf, pos(';', sbuf)+1, length(sbuf)-2);
+    writeln(st[1]);
+    writeln(st[2]);
+    writeln(st[3]);
+    for i:=1 to 3 do
+    begin
+      if (s[i] = 'name') then read_name;
+      if (s[i] = 'date') then read_date;
+      if (s[i] = 'group') then read_group;
+    end;
+  end;
+
+  CloseFile(F);
+  CloseFile(Res);
+  readln();
+END.
