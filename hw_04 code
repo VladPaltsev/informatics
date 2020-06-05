@@ -1,0 +1,193 @@
+unit Unit1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Graph;
+
+type Point = record
+    x, y: integer;
+  end;
+
+type
+
+  { TForm1 }
+
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    edtOX: TEdit;
+    edtOY: TEdit;
+    edtRa: TEdit;
+    edtLX: TEdit;
+    edtLY: TEdit;
+    edtRX: TEdit;
+    edtRY: TEdit;
+    edtAX: TEdit;
+    edtAY: TEdit;
+    edtBX: TEdit;
+    edtBY: TEdit;
+    edtCX: TEdit;
+    edtCY: TEdit;
+    GroupBox1: TGroupBox;
+    Image1: TImage;
+    Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label2: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    procedure Button1click(Sender: TObject);
+    procedure edtAXChange(Sender: TObject);
+  private
+
+  public
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.lfm}
+
+{ TForm1 }
+
+function GetDist(P1: Tpoint; P2: TPoint): Real;
+Begin
+  result := sqrt( sqr(P1.X - P2.X) + sqr(P1.Y - P2.Y) );
+End;
+
+procedure TForm1.edtAXChange(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Button1click(Sender: TObject);
+  var
+    A, B, C: TPoint;
+    AB, BC, AC: Real;
+    P, P_2, St: Real;
+    kx, ky: LongInt;
+
+  var
+    L, D, R, U: TPoint;
+    Sr: Real;
+
+  var
+    O: TPoint;
+    Sc: Real;
+    Rad: Integer;
+
+begin
+  O.X := StrToInt(edtOX.text);
+  O.Y := StrToInt(edtOY.text);
+  Rad := StrToInt(edtRa.text);
+
+  L.X := StrToInt(edtLX.text);
+  L.Y := StrToInt(edtLY.text);
+  R.X := StrToInt(edtRX.text);
+  R.Y := StrToInt(edtRY.text);
+  D.X := L.X;
+  D.Y := R.Y;
+  U.X := R.X;
+  U.Y := L.Y;
+
+  A.X := StrToInt(edtAX.text);
+  A.Y := StrToInt(edtAY.text);
+  B.X := StrToInt(edtBX.text);
+  B.Y := StrToInt(edtBY.text);
+  C.X := StrToInt(edtCX.text);
+  C.Y := StrToInt(edtCY.text);
+  AB := GetDist(A, B);
+  BC := GetDist(B, C);
+  AC := GetDist(A, C);
+  P := AB + BC + AC;
+  P_2 := P/2;
+  kx := round((A.X+B.X+C.X)/3);
+  ky := round((A.Y+B.Y+C.Y)/3);
+
+  Sc := pi * sqr(Rad);
+  Edit1.text := FloatToStr(Sc);
+  Sr := (GetDist(L, D) * GetDist(D, R));
+  Edit2.text := FloatToStr(Sr);
+  St := Sqrt( P_2 * (P_2-AB) * (P_2-BC) * (P_2-AC) );
+  Edit3.text := FloatToStr(St);
+
+  Image1.Canvas.Brush.Color := clWhite;
+  Image1.Canvas.Rectangle(0, 0, 800, 600);
+  With Image1.Canvas do
+  begin
+
+
+
+    Pen.Color := clBlack;      //Рисование треугольника
+    Pen.Width := 2;
+    MoveTo(A);
+    LineTo(B);
+    LineTo(C);
+    LineTo(A);
+    if (St > Sr) and (St > Sc) then
+    begin
+      Brush.Color := ClRed;
+      Image1.Canvas.FloodFill(kx, ky, clBlack, fsBorder);
+    end;
+    if (St < Sr) and (St < Sc) then
+    begin
+      Brush.Color := ClBlue;
+      Image1.Canvas.FloodFill(kx, ky, clBlack, fsBorder);
+    end;
+
+
+
+
+    Pen.Color := clBlack;       //рисование окружности
+    Pen.Width := 2;
+    if (Sc > St) and (Sc > Sr) then Brush.Color := ClRed;
+    if (Sc < St) and (Sc < Sr) then Brush.Color := ClBlue;
+    Ellipse(O.X - Rad, O.Y - Rad, O.X + Rad, O.Y + Rad);
+
+
+
+
+
+    Pen.Color := clBlack;       //рисование прямоугольника
+    Pen.Width := 2;
+    MoveTo(L);
+    LineTo(D);
+    LineTo(R);
+    LineTo(U);
+    LineTo(L);
+    if (Sr > St) and (Sr > Sc) then
+    begin
+      Brush.Color := ClRed;
+      Image1.Canvas.Rectangle(L.X, L.Y, R.X, R.Y);
+    end;
+    if (Sr < St) and (Sr < Sc) then
+    begin
+      Brush.Color := ClBlue;
+      Image1.Canvas.Rectangle(L.X, L.Y, R.X, R.Y);
+    end;
+  end;
+end;
+end. 
